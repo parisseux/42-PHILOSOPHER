@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: parissachatagny <parissachatagny@studen    +#+  +:+       +#+        */
+/*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:23:33 by parissachat       #+#    #+#             */
-/*   Updated: 2025/01/14 16:07:54 by parissachat      ###   ########.fr       */
+/*   Updated: 2025/01/20 18:30:05 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,34 +15,50 @@
 int	ft_atoi(const char *str)
 {
 	int	i;
-	int	count;
 	int	res;
 
 	res = 0;
-	count = 0;
 	i = 0;
 	while (str[i] == '\t' || str[i] == '\n' || str[i] == '\v' || str[i] == '\f'
 		|| str[i] == '\r' || str[i] == ' ')
 		i++;
 	if (str[i] == '+')
 		i++;
-	else if (str[i] == '-')
-	{
-		count = 1;
-		i++;
-	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		res = res * 10 + (str[i] - '0');
 		i++;
 	}
-	if (count == 1)
-		return (-res);
 	return (res);
+}
+
+int	ft_is_positiv_number(char *s)
+{
+	int	i;
+
+	i = 0;
+	if (s[0] == '+')
+		i++;
+	while (s[i])
+	{
+		if (!(s[i] >= '0' && s[i] <= '9'))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 int	ft_check_input(int ac, char **av, t_data *data)
 {
+	int	i;
+
+	i = 1;
+	while (i < ac)
+	{
+		if (ft_is_positiv_number(av[i]) == 0)
+			return (0);
+		i++;
+	}
 	data->n_philo = ft_atoi(av[1]);
 	data->n_fork = data->n_philo;
 	data->time_to_die = ft_atoi(av[2]);

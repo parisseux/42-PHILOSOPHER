@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: parissachatagny <parissachatagny@studen    +#+  +:+       +#+         #
+#    By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/14 14:11:10 by parissachat       #+#    #+#              #
-#    Updated: 2025/01/14 14:41:51 by parissachat      ###   ########.fr        #
+#    Updated: 2025/01/20 14:18:29 by pchatagn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,9 @@ SRCDIR = src
 OBJDIR = obj
 
 FILES = main.c \
-		check_input.c
+		check_input.c \
+		create_philo.c \
+		free.c
 
 SRC = $(addprefix $(SRCDIR)/, $(FILES))
 OBJ = $(addprefix $(OBJDIR)/, $(FILES:.c=.o))

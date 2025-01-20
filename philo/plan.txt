@@ -1,0 +1,44 @@
+gerer les erreurs arguments:
+- minium un philo
+- temps positif
+
+cas:
+
+1 philo: prend une fourchette --> meurt car ne peut aps manger avec une fourchette
+
+
+2 philos: philo 1 prend deux fourchettes et mange, philo 2 pense et puis vice versa
+
++ de 2 ophilo: nmomnre impaire commence a mangee
+
+!!!! si philo ne mange pas alors il pense. 
+
+
+apres manger chaque philo dort... et puis pense si il ne peut pas manger
+
+
+monitor:
+- temps d'attente entre repas d;passe temps limite?
+- est ce qu-un philo est mort?
+- est ce que tous les philos ont assez manger?
+
+
+routine:
+1. manger --> il faut 2 fourchettes
+2. dormir --> compteur de temps
+3. penser
+
+chaque philo (=thread)
+- un Id
+- une fourchette a droite
+- une fourchette a gauche
+- un philo a droite
+- un philo a gauche
+- temps depuis dernier repas
+- nbr de repas mange
+
+Chaque fourchette
+- un Id
+- un philo a droite
+- un philo a gauche
+- un etat (mutex): loch ou unloxk?

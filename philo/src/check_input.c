@@ -6,7 +6,7 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:23:33 by parissachat       #+#    #+#             */
-/*   Updated: 2025/01/20 18:30:05 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/01/21 17:56:45 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,28 +48,10 @@ int	ft_is_positiv_number(char *s)
 	return (1);
 }
 
-int	ft_check_input(int ac, char **av, t_data *data)
+int	ft_check_input(t_data data, int ac)
 {
-	int	i;
-
-	i = 1;
-	while (i < ac)
-	{
-		if (ft_is_positiv_number(av[i]) == 0)
-			return (0);
-		i++;
-	}
-	data->n_philo = ft_atoi(av[1]);
-	data->n_fork = data->n_philo;
-	data->time_to_die = ft_atoi(av[2]);
-	data->time_to_eat = ft_atoi(av[3]);
-	data->time_to_sleep = ft_atoi(av[4]);
-	if (ac == 6)
-		data->n_eat = ft_atoi(av[5]);
-	else
-		data->n_eat = -1;
-	if (data->n_philo < 1 || data->time_to_die <= 0 || data->time_to_eat <= 0
-		|| data->time_to_sleep <= 0 || (ac == 6 && data->n_eat <= 0))
+	if (data.n_philo < 1 || data.time_to_die <= 0 || data.time_to_eat <= 0
+		|| data.time_to_sleep <= 0 || (ac == 6 && data.n_eat <= 0))
 		return (0);
 	return (1);
 }

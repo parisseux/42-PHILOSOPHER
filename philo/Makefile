@@ -6,7 +6,7 @@
 #    By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/14 14:11:10 by parissachat       #+#    #+#              #
-#    Updated: 2025/01/20 14:18:29 by pchatagn         ###   ########.fr        #
+#    Updated: 2025/01/21 11:54:15 by pchatagn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ OBJDIR = obj
 
 FILES = main.c \
 		check_input.c \
-		create_philo.c \
+		set_up.c \
 		free.c
 
 SRC = $(addprefix $(SRCDIR)/, $(FILES))

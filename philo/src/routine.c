@@ -1,43 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/20 14:18:36 by pchatagn          #+#    #+#             */
-/*   Updated: 2025/01/21 17:55:12 by pchatagn         ###   ########.fr       */
+/*   Created: 2025/01/22 13:23:27 by pchatagn          #+#    #+#             */
+/*   Updated: 2025/01/22 18:46:50 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-
-void	ft_clean_up(t_data *data, t_philo *philo)
+void    *ft_routine(void *arg)
 {
-	int i;
+    
+    if (!arg) {
+        printf("error: Null pointer passed to thread routine\n");
+        pthread_exit(NULL);
+    }
 
-	i = 0;
-	if (data)
-	{
-		if (data->forks)
-		{
-			while (i < data->n_philo)
-			{
-			pthread_mutex_destroy(&data.forks[i]);
-			i++;
-			}
-			pthread_mutex_destroy(&data.forks);
-		}
-		if (data->init_mutex)
-		{
-			pthread_mutex_destroy(&data.stop_mutex);
-			pthread_mutex_destroy(&data.print_mutex);
-		}
-	}
-	if (philo)
-	{
-		free(philo);
-	}
-		
+    t_philo *philo = (t_philo *)arg;
+    printf("Thread started for philo %d.\n", philo->id);
+    
+    printf("philo %d is eating.\n", (*philo).id);
+    printf("philo %d is sleeping.\n", (*philo).id);
+    printf("philo %d is thinking.\n", (*philo).id);
+    return (NULL);
 }

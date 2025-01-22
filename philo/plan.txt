@@ -42,3 +42,33 @@ Chaque fourchette
 - un philo a droite
 - un philo a gauche
 - un etat (mutex): loch ou unloxk?
+
+
+Thread Per Philosopher
+One Thread per Philosopher:
+
+Each philosopher is represented by a thread.
+The philosopher’s behavior is implemented in the routine function.
+All threads run concurrently.
+Thread Function (Routine):
+
+The routine defines what a philosopher does:
+Think
+Try to pick up forks
+Eat
+Sleep
+The routine will typically loop until a termination condition is met (e.g., a stop flag).
+Thread Lifecycle:
+
+Threads are created at the start of the simulation.
+Threads execute the routine function.
+Threads are joined when the simulation ends, ensuring proper cleanup.
+
+
+
+
+
+PLANNING
+--> cree mes tread 
+--> induire une routine meme random au debur
+--> inclure temps

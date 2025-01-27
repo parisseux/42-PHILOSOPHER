@@ -6,37 +6,39 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:23:33 by parissachat       #+#    #+#             */
-/*   Updated: 2025/01/22 17:24:14 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/01/22 19:33:21 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long ft_atol(const char *str) 
+long	ft_atol(const char *str)
 {
-    int i;
-    long res;
-	
+	int		i;
+	long	res;
+
 	i = 0;
 	res = 0;
-    while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n' || str[i] == '\v' || str[i] == '\f' || str[i] == '\r')
-        i++;
-    if (str[i] == '+')
-        i++;
-    while (str[i] >= '0' && str[i] <= '9') 
+	while (str[i] == ' ' || str[i] == '\t'
+		|| str[i] == '\n' || str[i] == '\v' || str[i] == '\f'
+		|| str[i] == '\r')
+		i++;
+	if (str[i] == '+')
+		i++;
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-        res = res * 10 + (str[i] - '0');
-        if (res > INT_MAX)
-            return (LONG_MAX);
-        i++;
-    }
-    return (res);
+		res = res * 10 + (str[i] - '0');
+		if (res > INT_MAX)
+			return (LONG_MAX);
+		i++;
+	}
+	return (res);
 }
 
 int	ft_is_positiv_number(char **av, int ac)
 {
 	int	i;
-	int j;
+	int	j;
 
 	j = 1;
 	while (j < ac)
@@ -60,26 +62,26 @@ int	ft_is_positiv_number(char **av, int ac)
 
 int	ft_check_input(t_data data, int ac)
 {
-	int valid = 1;
 	if (data.n_philo < 1 || data.n_philo > 200)
 	{
-    	printf("Error: Invalid number of philosophers (%d). Must be greater than 0 and smaller than 200.\n", data.n_philo);
-    	valid = 0;
+		printf("Error: Invalid number of philosophers %d\n", data.n_philo);
+		printf("Must be greater than 0 and smaller than 200.\n");
+		return (0);
 	}
 	if ((data.time_to_die <= 0) || (data.time_to_die > 60000)
 		|| (data.time_to_eat <= 0) || (data.time_to_eat > 60000)
-		|| (data.time_to_sleep <= 0)|| (data.time_to_sleep > 60000))
+		|| (data.time_to_sleep <= 0) || (data.time_to_sleep > 60000))
 	{
-    	printf("Error: Times must be greater than 1 ms and smaller than one minute (die=%d, eat=%d, sleep=%d).\n",
-           data.time_to_die, data.time_to_eat, data.time_to_sleep);
-   		valid = 0;
+		printf("Error: Times must be betweem 0 ms and 1 min.\n");
+		return (0);
 	}
 	if (ac == 6 && (data.n_eat <= 0 || data.n_eat > 200))
 	{
-		printf("Error: Invalid meal count (%d). Must be greater than 0 and smaller than 200.\n", data.n_eat);
-		valid = 0;
+		printf("Error: Invalid meal count (%d).\n");
+		printf("Must be greater than 0 and smaller than 200.\n", data.n_eat);
+		return (0);
 	}
-	return valid;
+	return (1);
 }
 
 void	ft_print_usage(void)

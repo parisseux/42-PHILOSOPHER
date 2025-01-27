@@ -6,7 +6,7 @@
 #    By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/14 14:11:10 by parissachat       #+#    #+#              #
-#    Updated: 2025/01/22 18:39:34 by pchatagn         ###   ########.fr        #
+#    Updated: 2025/01/27 16:14:47 by pchatagn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ FILES = main.c \
 		set_up.c \
 		set_up2.c \
 		routine.c \
-		end.c
+		end.c \
+		utils.c
 
 SRC = $(addprefix $(SRCDIR)/, $(FILES))
 OBJ = $(addprefix $(OBJDIR)/, $(FILES:.c=.o))

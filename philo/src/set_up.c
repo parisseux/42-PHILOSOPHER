@@ -6,7 +6,7 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 14:17:40 by pchatagn          #+#    #+#             */
-/*   Updated: 2025/01/27 11:27:04 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/01/27 16:12:04 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ t_data	ft_setup_data(int ac, char **av)
 		data.n_eat = -1;
 	data.stop = 0;
 	data.fork_init = 0;
-	data.time_start = ft_get_starting_time();
+	data.philo_ready = 0;
+	data.time_start = 0;
+	pthread_mutex_init(&data.start_mutex, NULL);
 	pthread_mutex_init(&data.stop_mutex, NULL);
 	pthread_mutex_init(&data.print_mutex, NULL);
 	return (data);
@@ -99,34 +101,33 @@ pthread_mutex_t	*ft_setup_forks(t_data *data)
 pthread_t	*ft_setup_threads(t_data *data, t_philo *philo)
 {
 	int			i;
-	int			j;
 	pthread_t	*philo_threads;
 
 	philo_threads = malloc(sizeof(pthread_t) * data->n_philo);
 	if (!philo_threads)
 	{
-		printf("Error: Threads allocations\n");
+		printf("Error: Threads allocation failed.\n");
 		return (NULL);
 	}
+
 	i = 0;
 	while (i < data->n_philo)
 	{
-		if ((pthread_create(&philo_threads[i], NULL, ft_routine, (void *)&philo[i]) != 0))
+		if (pthread_create(&philo_threads[i], NULL, ft_routine, (void *)&philo[i]) != 0)
 		{
 			printf("Error: Failed to create thread for philosopher %d.\n", i + 1);
-			j = 0;
-			while (i < j)
-			{
-				pthread_cancel(philo_threads[j]);
-				j++;
-			}
+			while (--i >= 0)
+				pthread_cancel(philo_threads[i]);
 			free(philo_threads);
 			return (NULL);
 		}
+		ft_philo_ready(data);
 		i++;
 	}
+	ft_monitor_start(data);
 	return (philo_threads);
 }
+
 
 int	ft_setup(t_data *data, t_philo **philo,
 			pthread_mutex_t **forks, pthread_t **philo_threads)

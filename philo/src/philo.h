@@ -6,7 +6,7 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:20:28 by parissachat       #+#    #+#             */
-/*   Updated: 2025/01/27 11:07:11 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/01/27 18:15:47 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <pthread.h>
 # include <limits.h>
 # include <sys/time.h>
+# include <unistd.h>
 
 typedef struct s_data
 {
@@ -30,10 +31,12 @@ typedef struct s_data
 	int				n_eat;
 	int				stop;
 	long long		time_start;
+	pthread_mutex_t start_mutex;
 	pthread_mutex_t	stop_mutex;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	*forks;
 	int				fork_init;
+	int				philo_ready;
 }	t_data;
 
 typedef struct s_philo
@@ -58,9 +61,13 @@ int				ft_setup(t_data *data, t_philo **philo,
 pthread_mutex_t	*ft_setup_forks(t_data *data);
 t_philo			*ft_setup_philo(t_data *data, pthread_mutex_t *forks);
 pthread_t		*ft_setup_threads(t_data *data, t_philo *philo);
+void ft_philo_ready(t_data *data);
+void ft_monitor_start(t_data *data);
+long long ft_get_simulation_time(t_data *data);
 
 //routine
 void			*ft_routine(void *arg);
+void ft_print_actions(t_philo *philo, int c);
 
 //end
 void			ft_join_threads(int n, pthread_t *philo_threads);

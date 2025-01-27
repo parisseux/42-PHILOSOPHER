@@ -6,7 +6,7 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:12:15 by pchatagn          #+#    #+#             */
-/*   Updated: 2025/01/22 19:21:21 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/01/27 15:00:34 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,18 @@ long long	ft_get_starting_time(void)
 	gettimeofday(&tv, NULL);
 	time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	return (time);
+}
+
+
+long long ft_get_simulation_time(t_data *data)
+{
+	long long	time;
+
+	time = ft_get_starting_time() - data->time_start;
+	return (time);
+}
+
+void ft_philo_ready(t_data *data)
+{
+	data->philo_ready++;
 }

@@ -6,7 +6,7 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:14:51 by parissachat       #+#    #+#             */
-/*   Updated: 2025/01/27 11:01:40 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/01/27 12:10:01 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	main(int ac, char **av)
 		ft_clean_up(&data, &philo, forks);
 		return (1);
 	}
-	printf("salut\n");
 	ft_join_threads(data.n_philo, philo_threads);
 	ft_clean_up(&data, &philo, forks);
 	free(philo_threads);

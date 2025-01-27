@@ -6,7 +6,7 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:23:33 by parissachat       #+#    #+#             */
-/*   Updated: 2025/01/22 19:33:21 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/01/27 11:54:24 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ int	ft_check_input(t_data data, int ac)
 	}
 	if (ac == 6 && (data.n_eat <= 0 || data.n_eat > 200))
 	{
-		printf("Error: Invalid meal count (%d).\n");
-		printf("Must be greater than 0 and smaller than 200.\n", data.n_eat);
+		printf("Error: Invalid meal count (%d).\n", data.n_eat);
+		printf("Must be greater than 0 and smaller than 200.\n");
 		return (0);
 	}
 	return (1);

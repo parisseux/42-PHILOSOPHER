@@ -6,7 +6,7 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 14:17:40 by pchatagn          #+#    #+#             */
-/*   Updated: 2025/01/27 16:12:04 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/01/27 18:37:03 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ pthread_t	*ft_setup_threads(t_data *data, t_philo *philo)
 		printf("Error: Threads allocation failed.\n");
 		return (NULL);
 	}
-
 	i = 0;
 	while (i < data->n_philo)
 	{
@@ -127,7 +126,6 @@ pthread_t	*ft_setup_threads(t_data *data, t_philo *philo)
 	ft_monitor_start(data);
 	return (philo_threads);
 }
-
 
 int	ft_setup(t_data *data, t_philo **philo,
 			pthread_mutex_t **forks, pthread_t **philo_threads)

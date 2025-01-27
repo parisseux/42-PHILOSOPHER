@@ -6,7 +6,7 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:12:15 by pchatagn          #+#    #+#             */
-/*   Updated: 2025/01/27 15:00:34 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/01/27 18:37:31 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ long long	ft_get_starting_time(void)
 	return (time);
 }
 
-
-long long ft_get_simulation_time(t_data *data)
+long long	ft_get_simulation_time(t_data *data)
 {
 	long long	time;
 
@@ -31,7 +30,7 @@ long long ft_get_simulation_time(t_data *data)
 	return (time);
 }
 
-void ft_philo_ready(t_data *data)
+void	ft_philo_ready(t_data *data)
 {
 	data->philo_ready++;
 }

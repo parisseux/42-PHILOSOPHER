@@ -6,7 +6,7 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:23:27 by pchatagn          #+#    #+#             */
-/*   Updated: 2025/01/29 15:51:54 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/01/29 18:00:33 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	ft_monitor_start(t_data *data)
 void	*ft_routine(void *arg)
 {
 	t_philo		*philo;
+
 	if (!arg)
 	{
 		printf("error: Null pointer passed to thread routine\n");

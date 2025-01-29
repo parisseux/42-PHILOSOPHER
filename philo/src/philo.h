@@ -6,7 +6,7 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:20:28 by parissachat       #+#    #+#             */
-/*   Updated: 2025/01/29 16:00:24 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/01/29 17:47:00 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,3 @@ void			ft_end_of_philo(t_data data, t_philo *philo,
 					pthread_mutex_t *forks, pthread_t *philo_threads);
 
 #endif
-

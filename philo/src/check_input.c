@@ -6,7 +6,7 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:23:33 by parissachat       #+#    #+#             */
-/*   Updated: 2025/01/29 12:12:17 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/01/29 17:40:40 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ long	ft_atol(const char *str)
 	{
 		res = res * 10 + (str[i] - '0');
 		if (res > INT_MAX)
-			return (LONG_MAX);
+			return (-1);
 		i++;
 	}
 	return (res);
@@ -49,7 +49,10 @@ int	ft_is_positiv_number(char **av, int ac)
 		while (av[j][i])
 		{
 			if (!(av[j][i] >= '0' && av[j][i] <= '9'))
+			{
 				ft_print_usage();
+				return (0);
+			}
 			i++;
 		}
 		j++;
@@ -61,7 +64,7 @@ int	ft_check_input(t_data data, int ac)
 {
 	if (data.n_philo < 1 || data.n_philo > 200)
 	{
-		printf("Error: Invalid number of philosophers %d\n", data.n_philo);
+		printf("Error: Invalid number of philosophers.\n");
 		printf("Must be greater than 0 and smaller than 200.\n");
 		return (0);
 	}

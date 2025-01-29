@@ -6,7 +6,7 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:23:33 by parissachat       #+#    #+#             */
-/*   Updated: 2025/01/27 11:54:24 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/01/29 12:12:17 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,7 @@ int	ft_is_positiv_number(char **av, int ac)
 		while (av[j][i])
 		{
 			if (!(av[j][i] >= '0' && av[j][i] <= '9'))
-			{
 				ft_print_usage();
-				return (0);
-			}
 			i++;
 		}
 		j++;
@@ -89,4 +86,5 @@ void	ft_print_usage(void)
 	printf("Usage: ./philo number_of_philosophers ");
 	printf("time_to_die time_to_eat time_to_sleep ");
 	printf("[number_of_times_each_philosopher_must_eat]\n");
+	exit (1);
 }

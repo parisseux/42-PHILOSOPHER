@@ -6,7 +6,7 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:20:28 by parissachat       #+#    #+#             */
-/*   Updated: 2025/01/27 18:35:02 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/01/29 16:00:24 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 typedef struct s_data
 {
 	int				n_philo;
-	int				n_fork;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
@@ -44,6 +43,8 @@ typedef struct s_philo
 	int				id;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	count_meal;
+	pthread_mutex_t	last_meal;
 	long long		time_last_meal;
 	int				n_meal;
 	t_data			*data;
@@ -68,11 +69,19 @@ long long		ft_get_simulation_time(t_data *data);
 //routine
 void			*ft_routine(void *arg);
 void			ft_print_actions(t_philo *philo, int c);
+void			ft_think(t_philo *philo);
+void			ft_eat(t_philo *philo);
+void			ft_sleep(t_philo *philo);
+void			*ft_monitor(void *arg);
+void			ft_wait(int time_ms, t_data *data);
 
 //end
 void			ft_join_threads(int n, pthread_t *philo_threads);
 void			ft_clean_up(t_data *data, t_philo **philo,
 					pthread_mutex_t *forks);
 void			ft_destroy_mutex(t_data *data);
+void			ft_end_of_philo(t_data data, t_philo *philo,
+					pthread_mutex_t *forks, pthread_t *philo_threads);
 
 #endif
+

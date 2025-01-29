@@ -66,8 +66,6 @@ Threads are joined when the simulation ends, ensuring proper cleanup.
 
 
 
-
-
 PLANNING
 --> cree mes tread 
 --> induire une routine meme random au debur

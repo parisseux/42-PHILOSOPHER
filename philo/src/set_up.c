@@ -6,7 +6,7 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 14:17:40 by pchatagn          #+#    #+#             */
-/*   Updated: 2025/01/27 18:37:03 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/01/28 16:52:14 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_data	ft_setup_data(int ac, char **av)
 	if (ft_is_positiv_number(av, ac) == 0)
 		exit(1);
 	data.n_philo = (int)ft_atol(av[1]);
-	data.n_fork = data.n_philo;
 	data.time_to_die = (int)ft_atol(av[2]);
 	data.time_to_eat = (int)ft_atol(av[3]);
 	data.time_to_sleep = (int)ft_atol(av[4]);
@@ -60,6 +59,8 @@ t_philo	*ft_setup_philo(t_data *data, pthread_mutex_t *forks)
 			philo[i].left_fork = &forks[data->n_philo - 1];
 		else
 			philo[i].left_fork = &forks[i - 1];
+		pthread_mutex_init(&philo[i].count_meal, NULL);
+		pthread_mutex_init(&philo[i].last_meal, NULL);
 		i++;
 	}
 	return (philo);
@@ -102,6 +103,7 @@ pthread_t	*ft_setup_threads(t_data *data, t_philo *philo)
 {
 	int			i;
 	pthread_t	*philo_threads;
+	pthread_t	monitor_thread;
 
 	philo_threads = malloc(sizeof(pthread_t) * data->n_philo);
 	if (!philo_threads)
@@ -120,10 +122,17 @@ pthread_t	*ft_setup_threads(t_data *data, t_philo *philo)
 			free(philo_threads);
 			return (NULL);
 		}
-		ft_philo_ready(data);
+		data->philo_ready++;
 		i++;
 	}
 	ft_monitor_start(data);
+	if (pthread_create(&monitor_thread, NULL, ft_monitor, (void *)philo) != 0)
+	{
+		printf("Error: Failed to create monitor thread.\n");
+		free(philo_threads);
+		return (NULL);
+	}
+	pthread_detach(monitor_thread);
 	return (philo_threads);
 }
 

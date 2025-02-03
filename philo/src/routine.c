@@ -6,21 +6,20 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:23:27 by pchatagn          #+#    #+#             */
-/*   Updated: 2025/02/03 18:05:43 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/02/03 18:16:36 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
 void	*ft_monitor_start(void *arg)
 {
 	t_philo	*philo;
-	
-	philo = (t_philo *)arg;
 
+	philo = (t_philo *)arg;
 	pthread_mutex_lock(&philo->data->start_mutex);
 	philo->data->philo_ready++;
 	pthread_mutex_unlock(&philo->data->start_mutex);
-
 	while (1)
 	{
 		pthread_mutex_lock(&philo->data->start_mutex);
@@ -29,7 +28,7 @@ void	*ft_monitor_start(void *arg)
 			if (philo->data->time_start == 0)
 				philo->data->time_start = ft_get_starting_time();
 			pthread_mutex_unlock(&philo->data->start_mutex);
-			break;
+			break ;
 		}
 		pthread_mutex_unlock(&philo->data->start_mutex);
 		usleep(100);

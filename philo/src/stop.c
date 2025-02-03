@@ -6,7 +6,7 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:15:50 by pchatagn          #+#    #+#             */
-/*   Updated: 2025/02/03 17:58:41 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/02/03 18:19:46 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ft_stop_simulation(t_philo *philo)
 
 int	ft_stop_simulation2(t_philo *philo)
 {
-	int			i;
+	int	i;
 
 	i = 0;
 	while (i < philo[0].data->n_philo)
@@ -60,7 +60,7 @@ int	ft_stop_simulation2(t_philo *philo)
 			pthread_mutex_lock(&philo[0].data->stop_mutex);
 			philo[0].data->stop = 1;
 			pthread_mutex_unlock(&philo->data->stop_mutex);
-			pthread_mutex_unlock(&philo[i].last_meal);			
+			pthread_mutex_unlock(&philo[i].last_meal);
 			return (1);
 		}
 		pthread_mutex_unlock(&philo[i].last_meal);
@@ -77,17 +77,17 @@ void	*ft_monitor(void *arg)
 	while (1)
 	{
 		if (ft_stop_simulation(philo))
-			return (NULL) ;
+			return (NULL);
 		if (ft_stop_simulation2(philo))
-			return (NULL) ;
+			return (NULL);
 		usleep(1000);
 	}
 	return (NULL);
 }
 
-int ft_stop_loop(t_data *data)
+int	ft_stop_loop(t_data *data)
 {
-	int i;
+	int	i;
 
 	pthread_mutex_lock(&data->stop_mutex);
 	i = data->stop;

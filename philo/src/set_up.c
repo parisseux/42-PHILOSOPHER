@@ -6,7 +6,7 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 14:17:40 by pchatagn          #+#    #+#             */
-/*   Updated: 2025/02/03 17:28:46 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/02/03 18:18:19 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,11 @@ pthread_t	*ft_setup_threads(t_data *data)
 	return (philo_threads);
 }
 
-void	ft_create_threads(t_philo *philo, pthread_t *philo_threads, pthread_t *monitor_thread)
+void	ft_create_threads(t_philo *philo,
+			pthread_t *philo_threads, pthread_t *monitor_thread)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < philo->data->n_philo)
 	{
@@ -128,9 +129,10 @@ void	ft_create_threads(t_philo *philo, pthread_t *philo_threads, pthread_t *moni
 	pthread_create(monitor_thread, NULL, ft_monitor, (void *)philo);
 }
 
-void ft_join_threads(t_philo *philo, pthread_t *philo_threads, pthread_t monitor_thread)
+void	ft_join_threads(t_philo *philo,
+			pthread_t *philo_threads, pthread_t monitor_thread)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < philo->data->n_philo)
@@ -139,13 +141,12 @@ void ft_join_threads(t_philo *philo, pthread_t *philo_threads, pthread_t monitor
 		i++;
 	}
 	pthread_join(monitor_thread, NULL);
-	
 }
 
 int	ft_setup(t_data *data, t_philo **philo,
 			pthread_mutex_t **forks, pthread_t **philo_threads)
 {
-	pthread_t monitor_thread;
+	pthread_t	monitor_thread;
 
 	*forks = ft_setup_forks(data);
 	if (!*forks)

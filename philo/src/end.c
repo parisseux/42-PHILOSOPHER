@@ -6,7 +6,7 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 14:18:36 by pchatagn          #+#    #+#             */
-/*   Updated: 2025/01/28 16:07:19 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/02/03 14:33:17 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	ft_end_of_philo(t_data data, t_philo *philo,
 						pthread_mutex_t *forks, pthread_t *philo_threads)
 {
-	ft_join_threads(data.n_philo, philo_threads);
 	ft_clean_up(&data, &philo, forks);
 	free(philo_threads);
 }
@@ -67,16 +66,4 @@ void	ft_clean_up(t_data *data, t_philo **philo, pthread_mutex_t *forks)
 	pthread_mutex_destroy(&data->start_mutex);
 	pthread_mutex_destroy(&data->stop_mutex);
 	pthread_mutex_destroy(&data->print_mutex);
-}
-
-void	ft_join_threads(int n, pthread_t *philo_threads)
-{
-	int	i;
-
-	i = 0;
-	while (i < n)
-	{
-		pthread_join(philo_threads[i], NULL);
-		i++;
-	}
 }

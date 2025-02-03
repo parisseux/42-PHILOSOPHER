@@ -6,7 +6,7 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 14:17:40 by pchatagn          #+#    #+#             */
-/*   Updated: 2025/01/28 16:52:14 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/02/03 17:28:46 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,9 @@ pthread_mutex_t	*ft_setup_forks(t_data *data)
 	return (forks);
 }
 
-pthread_t	*ft_setup_threads(t_data *data, t_philo *philo)
+pthread_t	*ft_setup_threads(t_data *data)
 {
-	int			i;
 	pthread_t	*philo_threads;
-	pthread_t	monitor_thread;
 
 	philo_threads = malloc(sizeof(pthread_t) * data->n_philo);
 	if (!philo_threads)
@@ -111,42 +109,54 @@ pthread_t	*ft_setup_threads(t_data *data, t_philo *philo)
 		printf("Error: Threads allocation failed.\n");
 		return (NULL);
 	}
+	return (philo_threads);
+}
+
+void	ft_create_threads(t_philo *philo, pthread_t *philo_threads, pthread_t *monitor_thread)
+{
+	int	i;
+	
 	i = 0;
-	while (i < data->n_philo)
+	while (i < philo->data->n_philo)
 	{
-		if (pthread_create(&philo_threads[i], NULL, ft_routine, (void *)&philo[i]) != 0)
-		{
-			printf("Error: Failed to create thread for philosopher %d.\n", i + 1);
-			while (--i >= 0)
-				pthread_cancel(philo_threads[i]);
-			free(philo_threads);
-			return (NULL);
-		}
-		data->philo_ready++;
+		pthread_create(&philo_threads[i], NULL, ft_monitor_start, (void *)&philo[i]);
+		pthread_mutex_lock(&philo[i].data->start_mutex);
+		philo->data->philo_ready++;
+		pthread_mutex_unlock(&philo[i].data->start_mutex);
 		i++;
 	}
-	ft_monitor_start(data);
-	if (pthread_create(&monitor_thread, NULL, ft_monitor, (void *)philo) != 0)
+	pthread_create(monitor_thread, NULL, ft_monitor, (void *)philo);
+}
+
+void ft_join_threads(t_philo *philo, pthread_t *philo_threads, pthread_t monitor_thread)
+{
+	int i;
+
+	i = 0;
+	while (i < philo->data->n_philo)
 	{
-		printf("Error: Failed to create monitor thread.\n");
-		free(philo_threads);
-		return (NULL);
+		pthread_join(philo_threads[i], NULL);
+		i++;
 	}
-	pthread_detach(monitor_thread);
-	return (philo_threads);
+	pthread_join(monitor_thread, NULL);
+	
 }
 
 int	ft_setup(t_data *data, t_philo **philo,
 			pthread_mutex_t **forks, pthread_t **philo_threads)
 {
+	pthread_t monitor_thread;
+
 	*forks = ft_setup_forks(data);
 	if (!*forks)
 		return (0);
 	*philo = ft_setup_philo(data, *forks);
 	if (!*philo)
 		return (0);
-	*philo_threads = ft_setup_threads(data, *philo);
+	*philo_threads = ft_setup_threads(data);
 	if (!*philo_threads)
 		return (0);
+	ft_create_threads(*philo, *philo_threads, &monitor_thread);
+	ft_join_threads(*philo, *philo_threads, monitor_thread);
 	return (1);
 }

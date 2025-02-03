@@ -6,35 +6,43 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 13:23:27 by pchatagn          #+#    #+#             */
-/*   Updated: 2025/01/29 18:00:33 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/02/03 18:05:43 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	ft_monitor_start(t_data *data)
+void	*ft_monitor_start(void *arg)
 {
-	pthread_mutex_lock(&data->start_mutex);
-	while (data->n_philo != data->philo_ready)
+	t_philo	*philo;
+	
+	philo = (t_philo *)arg;
+
+	pthread_mutex_lock(&philo->data->start_mutex);
+	philo->data->philo_ready++;
+	pthread_mutex_unlock(&philo->data->start_mutex);
+
+	while (1)
 	{
-		pthread_mutex_unlock(&data->start_mutex);
+		pthread_mutex_lock(&philo->data->start_mutex);
+		if (philo->data->philo_ready >= philo->data->n_philo)
+		{
+			if (philo->data->time_start == 0)
+				philo->data->time_start = ft_get_starting_time();
+			pthread_mutex_unlock(&philo->data->start_mutex);
+			break;
+		}
+		pthread_mutex_unlock(&philo->data->start_mutex);
 		usleep(100);
-		pthread_mutex_lock(&data->start_mutex);
 	}
-	data->time_start = ft_get_starting_time();
-	pthread_mutex_unlock(&data->start_mutex);
+	while (!ft_stop_loop(philo->data))
+	{
+		ft_routine(philo);
+	}
+	return (NULL);
 }
 
-void	*ft_routine(void *arg)
+void	*ft_routine(t_philo *philo)
 {
-	t_philo		*philo;
-
-	if (!arg)
-	{
-		printf("error: Null pointer passed to thread routine\n");
-		pthread_exit(NULL);
-	}
-	philo = (t_philo *)arg;
 	pthread_mutex_lock(&philo->data->start_mutex);
 	while (philo->data->time_start == 0)
 	{
@@ -45,18 +53,17 @@ void	*ft_routine(void *arg)
 	pthread_mutex_unlock(&philo->data->start_mutex);
 	ft_think(philo);
 	if ((*philo).id % 2 == 0)
-		usleep(100);
-	while (1)
+		usleep(1000);
+	while (!ft_stop_loop(philo->data))
 	{
-		pthread_mutex_lock(&philo->data->stop_mutex);
-		if (philo->data->stop)
-		{
-			pthread_mutex_unlock(&philo->data->stop_mutex);
-			break ;
-		}
-		pthread_mutex_unlock(&philo->data->stop_mutex);
+		if (ft_stop_loop(philo->data))
+			return (NULL);
 		ft_eat(philo);
+		if (ft_stop_loop(philo->data))
+			return (NULL);
 		ft_sleep(philo);
+		if (ft_stop_loop(philo->data))
+			return (NULL);
 		ft_think(philo);
 	}
 	return (NULL);
@@ -77,12 +84,14 @@ void	ft_eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->left_fork);
 	ft_print_actions(philo, 3);
-	if (philo->data->n_philo == 1)
+	if (philo[0].data->n_philo == 1)
 	{
 		pthread_mutex_unlock(philo->left_fork);
 		ft_wait(philo->data->time_to_die, philo->data);
-		ft_print_actions(philo, 5);
-		exit (0);
+		pthread_mutex_lock(&philo[0].data->stop_mutex);
+		philo[0].data->stop = 1;
+		pthread_mutex_unlock(&philo[0].data->stop_mutex);
+		return ;
 	}
 	pthread_mutex_lock(philo->right_fork);
 	ft_print_actions(philo, 3);

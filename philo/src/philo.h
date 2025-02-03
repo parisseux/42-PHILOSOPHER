@@ -6,7 +6,7 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:20:28 by parissachat       #+#    #+#             */
-/*   Updated: 2025/01/29 17:47:00 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/02/03 16:35:54 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,26 +61,29 @@ int				ft_setup(t_data *data, t_philo **philo,
 					pthread_mutex_t **forks, pthread_t **philo_threads);
 pthread_mutex_t	*ft_setup_forks(t_data *data);
 t_philo			*ft_setup_philo(t_data *data, pthread_mutex_t *forks);
-pthread_t		*ft_setup_threads(t_data *data, t_philo *philo);
+pthread_t		*ft_setup_threads(t_data *data);
 void			ft_philo_ready(t_data *data);
-void			ft_monitor_start(t_data *data);
+void	*ft_monitor_start(void *arg);
 long long		ft_get_simulation_time(t_data *data);
+void ft_join_threads(t_philo *philo, pthread_t *philo_threads, pthread_t monitor_thread);
+void	ft_create_threads(t_philo *philo, pthread_t *philo_threads, pthread_t *monitor_thread);
 
 //routine
-void			*ft_routine(void *arg);
+void			*ft_routine(t_philo *philo);
 void			ft_print_actions(t_philo *philo, int c);
 void			ft_think(t_philo *philo);
 void			ft_eat(t_philo *philo);
 void			ft_sleep(t_philo *philo);
 void			*ft_monitor(void *arg);
 void			ft_wait(int time_ms, t_data *data);
+void			ft_print_death(t_philo *philo, int index);
 
 //end
-void			ft_join_threads(int n, pthread_t *philo_threads);
 void			ft_clean_up(t_data *data, t_philo **philo,
 					pthread_mutex_t *forks);
 void			ft_destroy_mutex(t_data *data);
 void			ft_end_of_philo(t_data data, t_philo *philo,
 					pthread_mutex_t *forks, pthread_t *philo_threads);
+int ft_stop_loop(t_data *data);
 
 #endif

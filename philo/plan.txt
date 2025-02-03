@@ -1,6 +1,14 @@
-gerer les erreurs arguments:
-- minium un philo
-- temps positif
+--------------------------------------------------------------------
+                             PHIlOSOPHER 
+--------------------------------------------------------------------
+
+------------------
+GERER LES ERREURS
+------------------
+- minium un philo et max
+- temps positif et max 1 minute
+- 4 ou 5 arguments (nombre de philo, temps de mort, temps de repas,
+temps de sommeil, nbr de repas max par repas)
 
 cas:
 
@@ -43,6 +51,10 @@ Chaque fourchette
 - un philo a gauche
 - un etat (mutex): loch ou unloxk?
 
+Monitor:
+- est ce qu'un philo est mort de faim?
+- est ce que tous les philos sont pleins?
+
 
 Thread Per Philosopher
 One Thread per Philosopher:
@@ -70,3 +82,25 @@ PLANNING
 --> cree mes tread 
 --> induire une routine meme random au debur
 --> inclure temps
+
+    --------------------------------
+   | TOUT CE QUE J'AI MALLOC/INITIER |
+    --------------------------------
+- start_mutex
+- stop_mutex
+- print_mutex
+        ------------------- check_input
+- malloc forks
+- mutex_forks x n_philo
+        ------------------- set_up forks
+- malloc philo 
+- count meal mutex
+- last meal mutex
+        --------------------set_up philo
+- malloc philo_threads
+        --------------------set_up threads
+- philo threads x n_philo
+- monitor thread
+        --------------------create_threads
+
+

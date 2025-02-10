@@ -6,7 +6,7 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 14:20:28 by parissachat       #+#    #+#             */
-/*   Updated: 2025/02/03 18:15:55 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/02/10 11:44:57 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,15 @@
 # include <limits.h>
 # include <sys/time.h>
 # include <unistd.h>
+
+//Color
+
+# define W  "\033[0m" //white
+# define GY   "\033[90m" //Grey
+# define GN  "\033[32m" //Green
+# define P "\033[35m" //Pink
+# define B   "\033[34m" //Blue
+# define R "\033[31m" //Red
 
 typedef struct s_data
 {
@@ -79,6 +88,7 @@ void			ft_sleep(t_philo *philo);
 void			*ft_monitor(void *arg);
 void			ft_wait(int time_ms, t_data *data);
 void			ft_print_death(t_philo *philo, int index);
+int				ft_all_philo_full(t_philo *philo);
 
 //end
 void			ft_clean_up(t_data *data, t_philo **philo,

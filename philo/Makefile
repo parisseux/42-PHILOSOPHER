@@ -6,7 +6,7 @@
 #    By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/14 14:11:10 by parissachat       #+#    #+#              #
-#    Updated: 2025/01/29 17:08:56 by pchatagn         ###   ########.fr        #
+#    Updated: 2025/02/10 11:46:57 by pchatagn         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ FILES = main.c \
 		routine.c \
 		end.c \
 		stop.c \
+		set_up2.c \
 		utils.c
 
 SRC = $(addprefix $(SRCDIR)/, $(FILES))

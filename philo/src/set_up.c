@@ -6,7 +6,7 @@
 /*   By: pchatagn <pchatagn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 14:17:40 by pchatagn          #+#    #+#             */
-/*   Updated: 2025/02/03 18:18:19 by pchatagn         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:28:20 by pchatagn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ t_philo	*ft_setup_philo(t_data *data, pthread_mutex_t *forks)
 		printf("Error: Memory allocation for philosophers failed\n");
 		return (NULL);
 	}
-	i = 0;
-	while (i < data->n_philo)
+	i = -1;
+	while (++i < data->n_philo)
 	{
 		philo[i].id = i + 1;
 		philo[i].n_meal = 0;
@@ -61,7 +61,6 @@ t_philo	*ft_setup_philo(t_data *data, pthread_mutex_t *forks)
 			philo[i].left_fork = &forks[i - 1];
 		pthread_mutex_init(&philo[i].count_meal, NULL);
 		pthread_mutex_init(&philo[i].last_meal, NULL);
-		i++;
 	}
 	return (philo);
 }
@@ -72,28 +71,24 @@ pthread_mutex_t	*ft_setup_forks(t_data *data)
 	int				j;
 	pthread_mutex_t	*forks;
 
-	i = 0;
+	i = -1;
 	forks = malloc(sizeof(pthread_mutex_t) * data->n_philo);
 	if (!forks)
 	{
 		printf("Error: allocation of forks failed.\n");
 		return (NULL);
 	}
-	while (i < data->n_philo)
+	while (++i < data->n_philo)
 	{
 		if (pthread_mutex_init(&forks[i], NULL) != 0)
 		{
 			printf("Error: Mutex initialization failed for fork %d.\n", i);
-			j = 0;
-			while (j < i)
-			{
+			j = -1;
+			while (++j < i)
 				pthread_mutex_destroy(&forks[j]);
-				j++;
-			}
 			free(forks);
 			return (NULL);
 		}
-		i++;
 	}
 	data->fork_init = 1;
 	return (forks);
@@ -110,37 +105,6 @@ pthread_t	*ft_setup_threads(t_data *data)
 		return (NULL);
 	}
 	return (philo_threads);
-}
-
-void	ft_create_threads(t_philo *philo,
-			pthread_t *philo_threads, pthread_t *monitor_thread)
-{
-	int	i;
-
-	i = 0;
-	while (i < philo->data->n_philo)
-	{
-		pthread_create(&philo_threads[i], NULL, ft_monitor_start, (void *)&philo[i]);
-		pthread_mutex_lock(&philo[i].data->start_mutex);
-		philo->data->philo_ready++;
-		pthread_mutex_unlock(&philo[i].data->start_mutex);
-		i++;
-	}
-	pthread_create(monitor_thread, NULL, ft_monitor, (void *)philo);
-}
-
-void	ft_join_threads(t_philo *philo,
-			pthread_t *philo_threads, pthread_t monitor_thread)
-{
-	int	i;
-
-	i = 0;
-	while (i < philo->data->n_philo)
-	{
-		pthread_join(philo_threads[i], NULL);
-		i++;
-	}
-	pthread_join(monitor_thread, NULL);
 }
 
 int	ft_setup(t_data *data, t_philo **philo,
